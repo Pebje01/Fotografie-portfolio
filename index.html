@@ -21,11 +21,36 @@
             background: #fdfbf7;
             font-family: 'Space Grotesk', sans-serif;
         }
-        .img-hover { transition: transform .5s ease; }
+        .img-hover { transition: transform .5s ease; cursor: pointer; }
         .img-hover:hover { transform: scale(1.03); }
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: rgba(0,0,0,.9);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body class="text-black antialiased min-h-screen">
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+        <button onclick="navigateLightbox(-1)" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;font-size:2rem;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8249;</button>
+        <img id="lightbox-img" src="" alt="">
+        <button onclick="navigateLightbox(1)" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;font-size:2rem;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8250;</button>
+        <button onclick="closeLightbox()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.5rem;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">&times;</button>
+    </div>
 
     <!-- Nav -->
     <nav class="max-w-[1200px] mx-auto px-6 py-6 flex items-center justify-between">
@@ -174,9 +199,6 @@
                     <img src="https://user-photos.cherrydeck.com/127367/assets/web_frankportret-59.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
                 </div>
                 <div class="break-inside-avoid">
-                    <img src="https://user-photos.cherrydeck.com/127367/assets/web_laurabankmaya-9.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
-                </div>
-                <div class="break-inside-avoid">
                     <img src="https://user-photos.cherrydeck.com/127367/assets/web_lauragraffiti-2.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
                 </div>
                 <div class="break-inside-avoid">
@@ -190,15 +212,6 @@
                 </div>
                 <div class="break-inside-avoid">
                     <img src="https://user-photos.cherrydeck.com/127367/assets/web_portrait-36.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
-                </div>
-                <div class="break-inside-avoid">
-                    <img src="https://user-photos.cherrydeck.com/127367/assets/web_portrait-12.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
-                </div>
-                <div class="break-inside-avoid">
-                    <img src="https://user-photos.cherrydeck.com/127367/assets/web_portrait-7.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
-                </div>
-                <div class="break-inside-avoid">
-                    <img src="https://user-photos.cherrydeck.com/127367/assets/web_portret1.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
                 </div>
                 <div class="break-inside-avoid">
                     <img src="https://user-photos.cherrydeck.com/127367/assets/web_portret-16.jpg" alt="Portret" class="w-full rounded-2xl img-hover cursor-pointer">
@@ -366,6 +379,36 @@
             </div>
         </section>
 
+        <!-- Overige -->
+        <section>
+            <div class="mb-6">
+                <h2 class="font-bold text-2xl md:text-3xl tracking-tight">Overige</h2>
+            </div>
+            <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+                <div class="break-inside-avoid">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1080,fit=crop/YBg87WPzj2TGkwvX/taxameter_portret-056-mv0lo2G3nLhjRDrX.jpg" alt="Overige" class="w-full rounded-2xl img-hover cursor-pointer">
+                </div>
+                <div class="break-inside-avoid">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1080,fit=crop/YBg87WPzj2TGkwvX/travel-79-Yle5ZWjXGBUB3eDG.jpg" alt="Overige" class="w-full rounded-2xl img-hover cursor-pointer">
+                </div>
+                <div class="break-inside-avoid">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1080,fit=crop/YBg87WPzj2TGkwvX/fotografie-YNqpBl5onWIlRyqk.jpg" alt="Overige" class="w-full rounded-2xl img-hover cursor-pointer">
+                </div>
+                <div class="break-inside-avoid">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1080,fit=crop/YBg87WPzj2TGkwvX/drone_reanex-8-2-mP4povN2jnHxeKW4.jpg" alt="Overige" class="w-full rounded-2xl img-hover cursor-pointer">
+                </div>
+                <div class="break-inside-avoid">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1080,fit=crop/YBg87WPzj2TGkwvX/miamae-113-Yg25xj7enesrnWLG.jpg" alt="Overige" class="w-full rounded-2xl img-hover cursor-pointer">
+                </div>
+                <div class="break-inside-avoid">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1080,fit=crop/YBg87WPzj2TGkwvX/shirakawago-3-mxBrk1jvElUab0DV.jpg" alt="Overige" class="w-full rounded-2xl img-hover cursor-pointer">
+                </div>
+                <div class="break-inside-avoid">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1080,fit=crop/YBg87WPzj2TGkwvX/drone_reanex-14-2-YyvoGQ3QV5tROrlq.jpg" alt="Overige" class="w-full rounded-2xl img-hover cursor-pointer">
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -373,6 +416,39 @@
         <span class="text-gray-400 text-xs">&copy; 2026 Daley Photography</span>
         <span class="text-gray-400 text-xs">info@thedaleyedit.nl</span>
     </footer>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        let allImages = [];
+        let currentIndex = 0;
+
+        document.querySelectorAll('.img-hover').forEach(img => {
+            img.addEventListener('click', () => {
+                const section = img.closest('section');
+                allImages = Array.from(section.querySelectorAll('.img-hover'));
+                currentIndex = allImages.indexOf(img);
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        function navigateLightbox(dir) {
+            currentIndex = (currentIndex + dir + allImages.length) % allImages.length;
+            lightboxImg.src = allImages[currentIndex].src;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+    </script>
 
 </body>
 </html>
